@@ -76,13 +76,13 @@ app.post('/webhook', express.json({ type: 'application/json' }), (req, res) => {
   let event: WebhookEvent;
 
   try {
+    // Verify the webhook signature and return a typed event
     event = bundlesocial.webhooks.constructEvent(
       req.body,
       signature as string,
       secret,
     );
-    console.log('event', event);
-    console.log('event.type', event.type);
+    // Do something with the event
   } catch (err) {
     console.log(`Webhook signature verification failed.`, err);
     return res.sendStatus(400);
