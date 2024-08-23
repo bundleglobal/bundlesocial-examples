@@ -55,10 +55,24 @@ app.get('/post', async (req, res) => {
       title: 'Hello World',
       status: 'SCHEDULED',
       postDate: new Date().toISOString(),
-      socialAccountTypes: ['INSTAGRAM'],
+      socialAccountTypes: ['INSTAGRAM', 'YOUTUBE', 'TIKTOK', 'REDDIT'],
       data: {
         INSTAGRAM: {
           type: 'REEL',
+          text: 'Hello World from bundle.social!',
+          uploadIds: [upload.id],
+        },
+        YOUTUBE: {
+          type: 'SHORT',
+          text: 'Hello World from bundle.social!',
+          uploadIds: [upload.id],
+        },
+        TIKTOK: {
+          text: 'Hello World from bundle.social!',
+          uploadIds: [upload.id],
+        },
+        REDDIT: {
+          sr: 'r/bundlesocial',
           text: 'Hello World from bundle.social!',
           uploadIds: [upload.id],
         },
