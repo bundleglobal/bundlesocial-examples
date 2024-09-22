@@ -146,6 +146,12 @@ app.get('/social-account-select-channel', async (req, res) => {
     const socialAccount = team?.socialAccounts?.find(
       (account) => account.type === 'YOUTUBE',
     );
+
+    if (!socialAccount) {
+      res.status(400).send('No social account found');
+      return;
+    }
+
     const socialAccountChannelId = socialAccount?.channels?.[0]?.id;
 
     if (socialAccountChannelId) {
