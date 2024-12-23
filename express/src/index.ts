@@ -73,7 +73,6 @@ app.get('/create-team', async (req, res) => {
     const team = await bundlesocial.team.teamCreateTeam({
       requestBody: {
         name: 'My Team',
-        tier: 'FREE',
       },
     });
 
