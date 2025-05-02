@@ -107,6 +107,33 @@ app.get('/team', async (req, res) => {
   }
 });
 
+app.get('/social-account-connect-hosted', async (req, res) => {
+  const bundlesocial = new Bundlesocial(apiKey);
+
+  try {
+    const response =
+      await bundlesocial.socialAccount.socialAccountCreatePortalLink({
+        requestBody: {
+          teamId,
+          socialAccountTypes: ['TIKTOK', 'FACEBOOK', 'INSTAGRAM'],
+          redirectUrl: 'https://your-redirect-url.com',
+          logoUrl: 'https://your-logo-url.com',
+          userLogoUrl: 'https://your-user-logo-url.com',
+          userName: 'Your User Name',
+        },
+      });
+
+    res.send(response);
+  } catch (error: unknown) {
+    if (error instanceof ApiError) {
+      res.status(500).send(error);
+    } else {
+      console.log(error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+});
+
 app.get('/social-account-connect', async (req, res) => {
   const bundlesocial = new Bundlesocial(apiKey);
 
@@ -196,24 +223,17 @@ app.get('/post', async (req, res) => {
         title: 'Hello World',
         status: 'SCHEDULED',
         postDate: new Date().toISOString(),
-        socialAccountTypes: ['INSTAGRAM', 'YOUTUBE', 'TIKTOK', 'REDDIT'],
+        socialAccountTypes: ['TWITTER', 'LINKEDIN', 'INSTAGRAM'],
         data: {
+          TWITTER: {
+            text: 'Hello World from bundle.social!',
+            uploadIds: [upload.id],
+          },
+          LINKEDIN: {
+            text: 'Hello World from bundle.social!',
+            uploadIds: [upload.id],
+          },
           INSTAGRAM: {
-            type: 'REEL',
-            text: 'Hello World from bundle.social!',
-            uploadIds: [upload.id],
-          },
-          YOUTUBE: {
-            type: 'SHORT',
-            text: 'Hello World from bundle.social!',
-            uploadIds: [upload.id],
-          },
-          TIKTOK: {
-            text: 'Hello World from bundle.social!',
-            uploadIds: [upload.id],
-          },
-          REDDIT: {
-            sr: 'r/bundlesocial',
             text: 'Hello World from bundle.social!',
             uploadIds: [upload.id],
           },
