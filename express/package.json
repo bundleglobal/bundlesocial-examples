@@ -49,7 +49,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "bundlesocial": "^2.12.0",
+    "bundlesocial": "^2.12.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jest-cucumber": "^3.0.1"

@@ -265,7 +265,21 @@ app.post('/webhook', express.json({ type: 'application/json' }), (req, res) => {
       signature as string,
       secret,
     );
+
     // Do something with the event
+    console.log(event);
+
+    if (event.type === 'post.published') {
+      return event.data;
+    }
+
+    if (event.type === 'team.created') {
+      return event.data;
+    }
+
+    if (event.type === 'social-account.created') {
+      return event.data;
+    }
   } catch (err) {
     console.log(`Webhook signature verification failed.`, err);
     return res.sendStatus(400);
