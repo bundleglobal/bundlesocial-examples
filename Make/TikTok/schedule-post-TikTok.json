@@ -1,0 +1,1006 @@
+{
+  "name": "Bundle.Social Tiktok Posting script",
+  "flow": [
+    {
+      "id": 15,
+      "module": "http:ActionGetFile",
+      "version": 3,
+      "parameters": {
+        "handleErrors": false
+      },
+      "mapper": {
+        "url": "{{1.`Image 1`[].url}}",
+        "method": "get",
+        "serializeUrl": false,
+        "shareCookies": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Get image 1",
+          "messages": [
+            {
+              "category": "reference",
+              "severity": "error",
+              "message": "Module references non-existing module '1'."
+            }
+          ]
+        },
+        "restore": {},
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          }
+        ],
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "hidden",
+            "label": "Method"
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.bundle.social/api/v1/upload",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": "{{1.`API Key (from Accounts)`[]}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "multipart_form_data",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "formDataFields": [
+          {
+            "fieldType": "file",
+            "key": "file",
+            "data": "{{15.data}}",
+            "fileName": "{{15.fileName}}"
+          }
+        ],
+        "followAllRedirects": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Upload image 1",
+          "messages": [
+            {
+              "category": "reference",
+              "severity": "error",
+              "message": "Module references non-existing module '1'."
+            }
+          ]
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [null]
+            },
+            "qs": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Multipart/form-data"
+            },
+            "formDataFields": {
+              "mode": "chose",
+              "items": [
+                {
+                  "fieldType": {
+                    "mode": "chose",
+                    "label": "File"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ],
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "type": "array",
+            "label": "Headers",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "qs",
+            "type": "array",
+            "label": "Query String",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": ["raw", "x_www_form_urlencoded", "multipart_form_data"]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "formDataFields",
+            "type": "array",
+            "label": "Fields",
+            "spec": [
+              {
+                "name": "fieldType",
+                "label": "Field type",
+                "type": "select",
+                "required": true,
+                "options": [
+                  {
+                    "value": "text",
+                    "label": "Text",
+                    "nested": [
+                      {
+                        "name": "key",
+                        "label": "Key",
+                        "type": "text",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "label": "Value",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  {
+                    "value": "file",
+                    "label": "File",
+                    "nested": [
+                      {
+                        "name": "key",
+                        "label": "Key",
+                        "type": "text",
+                        "required": true
+                      },
+                      {
+                        "name": "data",
+                        "label": "Data",
+                        "type": "buffer",
+                        "semantic": "file:data"
+                      },
+                      {
+                        "name": "fileName",
+                        "label": "File name",
+                        "help": "File name, including the suffix, e.g. invoice, xml",
+                        "type": "filename",
+                        "semantic": "file:name"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "module": "http:ActionGetFile",
+      "version": 3,
+      "parameters": {
+        "handleErrors": false
+      },
+      "mapper": {
+        "url": "{{1.`Image 2`[].url}}",
+        "method": "get",
+        "serializeUrl": false,
+        "shareCookies": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Get image 2",
+          "messages": [
+            {
+              "category": "reference",
+              "severity": "error",
+              "message": "Module references non-existing module '1'."
+            }
+          ]
+        },
+        "restore": {},
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          }
+        ],
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "hidden",
+            "label": "Method"
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.bundle.social/api/v1/upload",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": "{{1.`API Key (from Accounts)`[]}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "multipart_form_data",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "formDataFields": [
+          {
+            "fieldType": "file",
+            "key": "file",
+            "data": "{{16.data}}",
+            "fileName": "{{16.fileName}}"
+          }
+        ],
+        "followAllRedirects": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Upload image 2",
+          "messages": [
+            {
+              "category": "reference",
+              "severity": "error",
+              "message": "Module references non-existing module '1'."
+            }
+          ]
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [null]
+            },
+            "qs": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Multipart/form-data"
+            },
+            "formDataFields": {
+              "mode": "chose",
+              "items": [
+                {
+                  "fieldType": {
+                    "mode": "chose",
+                    "label": "File"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ],
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "type": "array",
+            "label": "Headers",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "qs",
+            "type": "array",
+            "label": "Query String",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": ["raw", "x_www_form_urlencoded", "multipart_form_data"]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "formDataFields",
+            "type": "array",
+            "label": "Fields",
+            "spec": [
+              {
+                "name": "fieldType",
+                "label": "Field type",
+                "type": "select",
+                "required": true,
+                "options": [
+                  {
+                    "value": "text",
+                    "label": "Text",
+                    "nested": [
+                      {
+                        "name": "key",
+                        "label": "Key",
+                        "type": "text",
+                        "required": true
+                      },
+                      {
+                        "name": "value",
+                        "label": "Value",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  {
+                    "value": "file",
+                    "label": "File",
+                    "nested": [
+                      {
+                        "name": "key",
+                        "label": "Key",
+                        "type": "text",
+                        "required": true
+                      },
+                      {
+                        "name": "data",
+                        "label": "Data",
+                        "type": "buffer",
+                        "semantic": "file:data"
+                      },
+                      {
+                        "name": "fileName",
+                        "label": "File name",
+                        "help": "File name, including the suffix, e.g. invoice, xml",
+                        "type": "filename",
+                        "semantic": "file:name"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.bundle.social/api/v1/post/",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": "{{1.`API Key (from Accounts)`[]}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\r\n  \"teamId\": \"{{1.`teamId (from Accounts)`}}\",\r\n  \"title\": \"{{1.Title}}\",\r\n  \"postDate\": \"{{now}}\",\n  \"status\": \"SCHEDULED\",\r\n  \"socialAccountTypes\": [\"TIKTOK\"],\r\n  \"data\": {\r\n    \"TIKTOK\": {\r\n      \"type\": \"IMAGE\",\r\n      \"text\": \"{{1.Caption}}\",\r\n      \"uploadIds\": [\r\n        \"{{13.data.id}}\",\r\n        \"{{17.data.id}}\"\r\n      ]\r\n    }\r\n  }\r\n}",
+        "followAllRedirects": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Post TikTok",
+          "messages": [
+            {
+              "category": "reference",
+              "severity": "error",
+              "message": "Module references non-existing module '1'."
+            }
+          ]
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "headers": {
+              "mode": "chose",
+              "items": [null, null]
+            },
+            "qs": {
+              "mode": "chose"
+            },
+            "bodyType": {
+              "label": "Raw"
+            },
+            "contentType": {
+              "label": "JSON (application/json)"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "hidden"
+          }
+        ],
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "serializeUrl",
+            "type": "boolean",
+            "label": "Serialize URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "patch",
+                "delete",
+                "options"
+              ]
+            }
+          },
+          {
+            "name": "headers",
+            "type": "array",
+            "label": "Headers",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "qs",
+            "type": "array",
+            "label": "Query String",
+            "spec": [
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "text",
+                "required": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "name": "bodyType",
+            "type": "select",
+            "label": "Body type",
+            "validate": {
+              "enum": ["raw", "x_www_form_urlencoded", "multipart_form_data"]
+            }
+          },
+          {
+            "name": "parseResponse",
+            "type": "boolean",
+            "label": "Parse response",
+            "required": true
+          },
+          {
+            "name": "authUser",
+            "type": "text",
+            "label": "User name"
+          },
+          {
+            "name": "authPass",
+            "type": "password",
+            "label": "Password"
+          },
+          {
+            "name": "timeout",
+            "type": "uinteger",
+            "label": "Timeout",
+            "validate": {
+              "max": 300,
+              "min": 1
+            }
+          },
+          {
+            "name": "shareCookies",
+            "type": "boolean",
+            "label": "Share cookies with other HTTP modules",
+            "required": true
+          },
+          {
+            "name": "ca",
+            "type": "cert",
+            "label": "Self-signed certificate"
+          },
+          {
+            "name": "rejectUnauthorized",
+            "type": "boolean",
+            "label": "Reject connections that are using unverified (self-signed) certificates",
+            "required": true
+          },
+          {
+            "name": "followRedirect",
+            "type": "boolean",
+            "label": "Follow redirect",
+            "required": true
+          },
+          {
+            "name": "useQuerystring",
+            "type": "boolean",
+            "label": "Disable serialization of multiple same query string keys as arrays",
+            "required": true
+          },
+          {
+            "name": "gzip",
+            "type": "boolean",
+            "label": "Request compressed content",
+            "required": true
+          },
+          {
+            "name": "useMtls",
+            "type": "boolean",
+            "label": "Use Mutual TLS",
+            "required": true
+          },
+          {
+            "name": "contentType",
+            "type": "select",
+            "label": "Content type",
+            "validate": {
+              "enum": [
+                "text/plain",
+                "application/json",
+                "application/xml",
+                "text/xml",
+                "text/html",
+                "custom"
+              ]
+            }
+          },
+          {
+            "name": "data",
+            "type": "buffer",
+            "label": "Request content"
+          },
+          {
+            "name": "followAllRedirects",
+            "type": "boolean",
+            "label": "Follow all redirect",
+            "required": true
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "slots": null,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "eu2.make.com",
+    "notes": []
+  }
+}
