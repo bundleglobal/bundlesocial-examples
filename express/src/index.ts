@@ -51,8 +51,6 @@ app.get('/organization', async (req, res) => {
     const organization =
       await bundlesocial.organization.organizationGetOrganization();
 
-    teamId = organization?.teams?.[0]?.id;
-
     res.send(organization);
   } catch (error: unknown) {
     console.log(error);
@@ -64,6 +62,16 @@ app.get('/organization', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   }
+});
+
+app.get('/teams', async (req, res) => {
+  const bundlesocial = new Bundlesocial(apiKey);
+  const teams = await bundlesocial.team.teamGetList({
+    limit: 10,
+    offset: 0,
+  });
+
+  res.send(teams);
 });
 
 app.get('/create-team', async (req, res) => {
@@ -210,10 +218,11 @@ app.get('/post', async (req, res) => {
 
   try {
     const video = await fs.readFile('./src/video.mp4');
+
     const upload = await bundlesocial.upload.uploadCreate({
       formData: {
         teamId,
-        file: new Blob([video], { type: 'video/mp4' }),
+        file: new Blob([new Uint8Array(video)], { type: 'video/mp4' }),
       },
     });
 

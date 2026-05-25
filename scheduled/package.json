@@ -1,0 +1,22 @@
+{
+  "name": "bundlesocial-scheduled-example",
+  "version": "1.0.0",
+  "description": "Scheduled / one-shot posting example for bundle.social (cron + GitHub Actions).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "post": "tsx scripts/schedule-post.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "bundlesocial": "^2.48.0",
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.12.7",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}

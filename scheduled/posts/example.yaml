@@ -1,0 +1,23 @@
+# Sample post config for scripts/schedule-post.ts
+#
+# Run with:
+#   pnpm tsx scripts/schedule-post.ts --config posts/example.yaml
+#
+# Fields:
+#   text       (required) post body shared across every platform
+#   platforms  (required) list of platforms — accepts aliases like "x",
+#                         "bluesky", "tiktok", "instagram", "linkedin"…
+#   mediaUrl   (optional) public URL to an image or video. The script will
+#                         call upload.uploadCreateFromUrl first and attach
+#                         the resulting upload id.
+#   date       (optional) ISO-8601 timestamp to schedule the post. When set
+#                         the post is created with status=SCHEDULED.
+#   title      (optional) post title shown in the bundle.social dashboard.
+
+text: "Hello from a scheduled GitHub Action! https://bundle.social"
+platforms:
+  - x
+  - bluesky
+# mediaUrl: "https://example.com/banner.png"
+# date: "2026-06-01T09:00:00Z"
+# title: "Weekly heartbeat"

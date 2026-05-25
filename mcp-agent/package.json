@@ -1,0 +1,22 @@
+{
+  "name": "bundlesocial-mcp-agent-example",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Example: drive bundlesocial-mcp from Claude (Anthropic SDK) via a manual agentic loop over a local stdio MCP server.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "start": "tsx index.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "bundlesocial-mcp": "file:../../bundlesocial-mcp",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

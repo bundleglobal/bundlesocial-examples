@@ -1,0 +1,3 @@
+httpx>=0.27
+# Optional, only used by examples/03_list_recent_posts.py for pretty tables.
+rich>=13.0
