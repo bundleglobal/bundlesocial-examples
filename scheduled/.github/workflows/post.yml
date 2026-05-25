@@ -1,0 +1,93 @@
+name: Scheduled bundle.social post
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC. Cron is in UTC on GitHub Actions.
+    # Customize freely: https://crontab.guru/
+    - cron: "0 9 * * 1"
+  release:
+    types: [published]
+  # Manual trigger for testing — visible in the Actions tab.
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "Post text (leave blank to use posts/example.yaml)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  weekly:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    name: Weekly heartbeat post
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+          cache-dependency-path: scheduled/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: scheduled
+        run: pnpm install --frozen-lockfile
+
+      - name: Post (from posts/example.yaml)
+        if: ${{ inputs.text == '' }}
+        working-directory: scheduled
+        env:
+          BUNDLESOCIAL_API_KEY: ${{ secrets.BUNDLESOCIAL_API_KEY }}
+          BUNDLESOCIAL_TEAM_ID: ${{ secrets.BUNDLESOCIAL_TEAM_ID }}
+        run: pnpm tsx scripts/schedule-post.ts --config posts/example.yaml
+
+      - name: Post (from workflow_dispatch input)
+        if: ${{ inputs.text != '' }}
+        working-directory: scheduled
+        env:
+          BUNDLESOCIAL_API_KEY: ${{ secrets.BUNDLESOCIAL_API_KEY }}
+          BUNDLESOCIAL_TEAM_ID: ${{ secrets.BUNDLESOCIAL_TEAM_ID }}
+        run: pnpm tsx scripts/schedule-post.ts --text "${{ inputs.text }}" --platform x --platform bluesky
+
+  release-announcement:
+    if: github.event_name == 'release'
+    name: Release announcement post
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+          cache-dependency-path: scheduled/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: scheduled
+        run: pnpm install --frozen-lockfile
+
+      - name: Announce release
+        working-directory: scheduled
+        env:
+          BUNDLESOCIAL_API_KEY: ${{ secrets.BUNDLESOCIAL_API_KEY }}
+          BUNDLESOCIAL_TEAM_ID: ${{ secrets.BUNDLESOCIAL_TEAM_ID }}
+          RELEASE_NAME: ${{ github.event.release.name || github.event.release.tag_name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+        run: |
+          pnpm tsx scripts/schedule-post.ts \
+            --text "🚀 New release: ${RELEASE_NAME} — ${RELEASE_URL}" \
+            --title "Release: ${RELEASE_NAME}" \
+            --platform x \
+            --platform bluesky \
+            --platform linkedin
