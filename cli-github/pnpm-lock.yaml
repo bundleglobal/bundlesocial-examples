@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   bundlesocial:
-    specifier: ^2.48.0
-    version: 2.48.0
+    specifier: ^2.66.1
+    version: 2.66.1
   commander:
     specifier: ^12.1.0
     version: 12.1.0
@@ -279,8 +279,8 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: false
 
-  /bundlesocial@2.48.0:
-    resolution: {integrity: sha512-cI5zz8HmTxreOrR9/yhtZe5bIlAF3T0MsLfkGXDkpcbJDCUOSxqhL+QwU793PaN5tExPzeLfJu9KktlKKizJLg==}
+  /bundlesocial@2.66.1:
+    resolution: {integrity: sha512-UxqwDhqNpePIqVE6o+yhEELn45sAefkFnF2n4xwr1o7lbpw1ktu6e7iOn6zdETBRCSlyWIw3nuiMlY72pQTWlA==}
     engines: {node: '>=18'}
     dev: false
 

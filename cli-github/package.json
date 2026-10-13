@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "bundlesocial": "^2.48.0",
+    "bundlesocial": "^2.66.1",
     "commander": "^12.1.0",
     "js-yaml": "^4.1.0"
   },

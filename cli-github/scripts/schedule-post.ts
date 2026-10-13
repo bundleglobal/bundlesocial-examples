@@ -160,15 +160,15 @@ function deriveTitle(text: string): string {
 
 async function resolveTeamId(client: Bundlesocial): Promise<string> {
   if (process.env.BUNDLESOCIAL_TEAM_ID) return process.env.BUNDLESOCIAL_TEAM_ID;
-  const org = await client.organization.organizationGetOrganization();
-  const teams = org.teams ?? [];
-  if (teams.length === 0) {
+  // Two is enough to tell "none / exactly one / several" apart; `total` gives the real count.
+  const { items: teams, total } = await client.team.teamGetList({ offset: 0, limit: 2 });
+  if (total === 0) {
     throw new ScheduledPostError(
       "NO_TEAM",
       "Organization has no teams. Create one in the bundle.social dashboard or pass BUNDLESOCIAL_TEAM_ID.",
     );
   }
-  if (teams.length > 1) {
+  if (total > 1) {
     throw new ScheduledPostError(
       "AMBIGUOUS_TEAM",
       "Organization has multiple teams; set BUNDLESOCIAL_TEAM_ID to disambiguate.",

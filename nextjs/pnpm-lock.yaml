@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   bundlesocial:
-    specifier: ^2.48.0
-    version: 2.48.0
+    specifier: ^2.66.1
+    version: 2.66.1
   next:
     specifier: ^15.1.0
     version: 15.5.18(react-dom@19.2.6)(react@19.2.6)
@@ -497,8 +497,8 @@ packages:
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
     dev: true
 
-  /bundlesocial@2.48.0:
-    resolution: {integrity: sha512-cI5zz8HmTxreOrR9/yhtZe5bIlAF3T0MsLfkGXDkpcbJDCUOSxqhL+QwU793PaN5tExPzeLfJu9KktlKKizJLg==}
+  /bundlesocial@2.66.1:
+    resolution: {integrity: sha512-UxqwDhqNpePIqVE6o+yhEELn45sAefkFnF2n4xwr1o7lbpw1ktu6e7iOn6zdETBRCSlyWIw3nuiMlY72pQTWlA==}
     engines: {node: '>=18'}
     dev: false
 

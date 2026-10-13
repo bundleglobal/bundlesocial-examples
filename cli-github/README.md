@@ -57,7 +57,7 @@ pnpm tsx scripts/schedule-post.ts \
 pnpm tsx scripts/schedule-post.ts --help
 ```
 
-The team id is auto-resolved via `organization.organizationGetOrganization`
+The team id is auto-resolved via `team.teamGetList` (the paginated team list)
 when there is a single team on the organization. Set
 `BUNDLESOCIAL_TEAM_ID` if you have several teams.
 
